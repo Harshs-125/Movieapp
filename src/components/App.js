@@ -4,7 +4,7 @@ import MovieCard  from './MovieCard';
 
 
 import { data } from '../data';
-import {addmovie,addfavourite} from '../actions/index';
+import {addmovie,addfavourite,setShowFavourites} from '../actions/index';
 class App extends React.Component {
   componentDidMount(){
      const {store} = this.props;
@@ -20,7 +20,8 @@ class App extends React.Component {
      console.log(store.getState());
   }
   isMoviefavourite=(movie)=>{
-    const {favourite}=this.props.store.getState();
+    const {movies}=this.props.store.getState();
+    const {favourite}=movies;
     const index=favourite.indexOf(movie);
     if(index!==-1)
     {
@@ -31,23 +32,25 @@ class App extends React.Component {
         return false;
     }  
   }
-  handleTabClick=(event)=>{
-    console.log(get)
+  handleClick=(value)=>{
+   this.props.store.dispatch(setShowFavourites(value));
   }
-
+  
   render(){
     console.log("Render", this.props.store.getState());
-    const {list}=this.props.store.getState();
+    const {movies}=this.props.store.getState();
+    const {list,favourite,showFavourites}=movies;
+    const display=showFavourites? favourite:list;
     return (
       <div className="App">
-        <Navbar />
+        <Navbar dispatch={this.props.store.dispatch}/>
         <div className="main">
           <div className="tabs">
-            <div className="tab" onClick={this.handleTabClick}>Movie</div>
-            <div className="tab" onClick={this.handleTabClick}>Favourites</div>
+            <div className={`tab ${showFavourites? ' ':'active-tabs'}`} onClick={() => this.handleClick(false)} >Movie</div>
+            <div className={`tab ${showFavourites? 'active-tabs':''}`} onClick={()=> this.handleClick(true)}>Favourites</div>
           </div>
           <div className="list">
-            {list.map((movie,index)=>(
+            {display.map((movie,index)=>(
               <MovieCard movie={movie} key={index} dispatch={this.props.store.dispatch}
                 isfavourite={this.isMoviefavourite(movie)}
                 store={this.props.store}
