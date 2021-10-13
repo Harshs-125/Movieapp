@@ -9,7 +9,7 @@ const initialMovieState={
 }
 export function movies(state=initialMovieState,action)
 {
-    console.log("movie-reducers");
+    //console.log("movie-reducers");
     // if(action.type===Add_movie)
     // {
     //     return {
@@ -58,7 +58,7 @@ const initialSearchState={
 }
 export function search(state=initialSearchState,action)
 {
-    console.log("Search Reducer");
+    //console.log("Search Reducer");
    return state;
 }
 
