@@ -1,7 +1,7 @@
 //API KEY FOR OMDB d32ebed3.
 //http://www.omdbapi.com/?apikey=[yourkey]&
 
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore , applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
@@ -36,9 +36,21 @@ const logger= ({dispatch,getState})=> (next)=> (action)=>{
 // }
 const store=createStore(rootReducer,applyMiddleware(logger,thunk));
 console.log("before action-",store.getState());
-
+export const StoreContext=createContext(); 
+class Provider extends React.Component{
+  render(){
+    const {store} = this.props;
+    return(
+      <StoreContext.Provider value={store}>
+        {this.props.children}
+      </StoreContext.Provider>
+    )
+  }
+}
 ReactDOM.render(
-    <App store={store}/>,
+    <Provider store={store}>
+      <App />
+    </Provider>,
   document.getElementById('root')
 );
 
