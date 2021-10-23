@@ -64,14 +64,22 @@ class App extends React.Component {
     );
   }
 }
-class AppWrapper extends React.Component{
-  render(){
-    return(
-      <StoreContext.Consumer>
-        {(store)=> <App store={store}/>}
-      </StoreContext.Consumer>
-    );
+// class AppWrapper extends React.Component{
+//   render(){
+//     return(
+//       <StoreContext.Consumer>
+//         {(store)=> <App store={store}/>}
+//       </StoreContext.Consumer>
+//     );
+//   }
+// }
+
+function callback(state){
+  return {
+    movies:state.movie,
+    search:state.search
   }
 }
+const connectAppcomponent=connect(callback)(App);
 
 export default AppWrapper;
