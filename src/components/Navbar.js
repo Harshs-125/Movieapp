@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { StoreContext } from '..';
+import { connect } from '..';
 
 import {handleMovieSearch,Show_Search_Result,addMovieToList} from '../actions/index'
 
@@ -55,13 +55,11 @@ render(){
 }
 
 }
-class NavWrapper extends React.Component{
-    render(){
-        return(
-            <StoreContext.Consumer>
-                {(store)=><Navbar dispatch={store.dispatch} search={this.props.search}/>}
-            </StoreContext.Consumer>
-        )
+function mapstatetoprops(state){
+    return{
+        search:state.search
     }
 }
-export default NavWrapper
+const connectedComponent=connect(mapstatetoprops)(Navbar);
+
+export default connectedComponent;
