@@ -5,23 +5,18 @@ import MovieCard  from './MovieCard';
 
 import { data } from '../data';
 import {addmovie,addfavourite,setShowFavourites} from '../actions/index';
-import { StoreContext } from '../index';
+import { connect } from '../index';
 class App extends React.Component {
-  componentDidMount(){
-     const {store} = this.props;
-     
-     store.subscribe(()=>{
-       console.log("updated");
-       this.forceUpdate();
-     });
-     //make api call
+  componentDidMount(props){
+     //make  api call
      //dispatch action
-     store.dispatch(addmovie(data))
-
-     console.log(store.getState());
+     this.props.dispatch(addmovie(data))
+      console.log("data",data);
+      console.log(this.props);
+     //console.log(this.props.store.getState());
   }
   isMoviefavourite=(movie)=>{
-    const {movies}=this.props.store.getState();
+    const {movies}=this.props;
     const {favourite}=movies;
     const index=favourite.indexOf(movie);
     if(index!==-1)
@@ -34,12 +29,12 @@ class App extends React.Component {
     }  
   }
   handleClick=(value)=>{
-   this.props.store.dispatch(setShowFavourites(value));
+   this.props.dispatch(setShowFavourites(value));
   }
   
   render(){
-    console.log("Render", this.props.store.getState());
-    const {movies,search}=this.props.store.getState();
+    console.log("Render", this.props);
+    const {movies,search}=this.props;
     const {list,favourite,showFavourites}=movies;
     const display=showFavourites? favourite:list;
 
@@ -53,7 +48,7 @@ class App extends React.Component {
           </div>
           <div className="list">
             {display.map((movie,index)=>(
-              <MovieCard movie={movie} key={index} dispatch={this.props.store.dispatch}
+              <MovieCard movie={movie} key={index} dispatch={this.props.dispatch}
                 isfavourite={this.isMoviefavourite(movie)}
                 store={this.props.store}
               />
@@ -74,12 +69,12 @@ class App extends React.Component {
 //   }
 // }
 
-function callback(state){
+function mapstatetoprops(state){
   return {
-    movies:state.movie,
+    movies:state.movies,
     search:state.search
   }
 }
-const connectAppcomponent=connect(callback)(App);
+const connectedcomponent=connect(mapstatetoprops)(App);
 
-export default AppWrapper;
+export default connectedcomponent;

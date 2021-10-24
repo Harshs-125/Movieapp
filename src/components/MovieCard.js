@@ -11,7 +11,7 @@ class MovieCard extends React.Component{
     handleRemoveFavourite=()=>{
         const {movie}=this.props
         this.props.dispatch(removeFavourite(movie))
-        console.log(this.props.store.getState());
+        //console.log(this.props.store.getState());
 
     }
     render(){
