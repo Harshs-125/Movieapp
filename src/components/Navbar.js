@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { connect } from '..';
+import { connect } from 'react-redux'
 
 import {handleMovieSearch,Show_Search_Result,addMovieToList} from '../actions/index'
 

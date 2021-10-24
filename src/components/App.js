@@ -5,7 +5,7 @@ import MovieCard  from './MovieCard';
 
 import { data } from '../data';
 import {addmovie,addfavourite,setShowFavourites} from '../actions/index';
-import { connect } from '../index';
+import { connect } from 'react-redux';
 class App extends React.Component {
   componentDidMount(props){
      //make  api call
