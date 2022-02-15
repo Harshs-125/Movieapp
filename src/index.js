@@ -3,15 +3,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore , applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import {Provider} from 'react-redux';
-
+import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './components/App';
 import rootReducer from './reducers/index';
-
 
 //function logger(obj,next,action)
 // const logger=function({dispatch,getState}){
@@ -24,23 +22,26 @@ import rootReducer from './reducers/index';
 //   }
 // }
 //modified middleWare
-const logger= ({dispatch,getState})=> (next)=> (action)=>{
-  //console.log("Action-type =",action.type);
-  next(action);
-}
+const logger =
+  ({ dispatch, getState }) =>
+  (next) =>
+  (action) => {
+    //console.log("Action-type =",action.type);
+    next(action);
+  };
 // const thunk=({dispatch,getState})=>(next)=>(action)=>{
 //   if(typeof action==="function")
-//   {  
+//   {
 //    action(dispatch);
 //    return
 //   }
 //   next(action);
 
 // }
-const store=createStore(rootReducer,applyMiddleware(logger,thunk));
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 // export const StoreContext = createContext();
 // console.log("before action-",store.getState());
- 
+
 // class Provider extends React.Component{
 //   render(){
 //     const {store} = this.props;
@@ -81,16 +82,15 @@ const store=createStore(rootReducer,applyMiddleware(logger,thunk));
 //          return <ConnectedComponent store={store}/>;
 //            }}
 //       </StoreContext.Consumer>
-//       );  
+//       );
 //     }
 //    }
 //    return ConnectedComponentWrapper;
 //   }
 // }
 ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
-
